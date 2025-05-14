@@ -1,20 +1,11 @@
-/*HEADER*/
-.header {
-    display: flex;
-    background-color: antiquewhite;
-    justify-content: space-between;
-}
-.header-logo img {
-    width: 120px;
-    height: auto;
-}
-.header-list {
+/*FORMULARIO*/
+.form {
     display: flex;
     justify-content: center;
-    list-style: none;
+    flex-direction: column;
     gap: 10px;
 }
-.header-list a {
-    text-decoration: none;
-    color: black;
+.form div {
+    display: flex;
+    gap: 10px;
 }
