@@ -1,11 +1,52 @@
+:root {
+    --primary-cream: #ffb67e;
+    --secondary-cream: #fed87d;
+    --primary-blue: #002bae;
+    --secondary-blue: #3571e2;
+    --background-blue: #cacdff;
+}
 /*FORMULARIO*/
 .form {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 5.2rem 1fr 7rem 1fr 6rem 1fr;
+    align-items: center;
 }
-.form div {
-    display: flex;
-    gap: 10px;
+.form label{
+    margin-bottom: 1rem;
 }
+.form input, select, textarea{
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border:  solid var(--primary-blue) 2px;
+    resize: none;
+}
+.form-category{
+    text-align: center;
+    background-color: var(--background-blue);
+    font-weight: bold;
+}
+.form-buttons{
+    grid-column: 1 / -1; /* ocupa todas las columnas */
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.form-buttons button {
+    width: 100%;
+    height: 3rem;
+    background-color: var(--background-blue);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: ease 0.3s;
+}
+.form-buttons button:hover{
+    background-color: var(--primary-blue);
+    color: white;
+}
+
+/**/
