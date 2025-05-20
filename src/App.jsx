@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import ProductCard  from './components/ProductCard';
+import DetailsCard  from './components/DetailsCard';
 import './App.css';
 
 export default function App() {
@@ -74,7 +75,7 @@ export default function App() {
           <ProductCard key={index} product={product} deleteProduct={() => deleteProduct(index)}></ProductCard>
         ))}
       </div>
-
+      <DetailsCard></DetailsCard>
   </div>
 
   )
