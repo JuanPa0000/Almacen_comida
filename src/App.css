@@ -76,10 +76,11 @@
 .productCard-title{
     padding: 1rem;
     font-size: 1.2rem;
+    width: 35%;
+    min-width: 35%;
 }
 .productCard-title-description{
     white-space: nowrap;
-    width: 30rem;
     text-overflow: ellipsis;
     overflow: hidden;
     margin: 0;
@@ -109,7 +110,8 @@
     display: flex;
     justify-content: end;
     height: 100%;
-    width: 100%;
+    width: 13rem;
+    min-width: 13rem;
     background-color: rgb(243, 242, 242);
     box-shadow: rgba(0, 0, 0, 0.107) 0 0 10px;
     border-top-left-radius: 40px;
