@@ -4,10 +4,29 @@ import ProductCard  from './components/ProductCard';
 import './App.css';
 
 export default function App() {
+  const [products, setProduct] = useState([]);
+
+  function addProduct(event){
+    event.preventDefault();
+    const form=event.target;
+    
+    const newProduct={
+      product: form.product.value,
+      description: form.description.value,
+      category: form.category.index,
+      size: form.size.value,
+      stock: form.stock.value,
+      price: form.price.value
+    };
+    console.log(form);
+    setProduct([...products,newProduct]);
+    form.reset();
+  }
+
   return (
     <div style={{width: '80rem'}}>
-     
-     <form className="form" action="./procesar.py" method="post" id='form'>
+
+     <form className="form" onSubmit={addProduct} id='form'>
         <label htmlFor="product">Nombre:</label>
         <input className="form-product" type="text" name="product" id="product" required/>
         <label htmlFor="description">Descripción:</label>
@@ -42,8 +61,9 @@ export default function App() {
 
       <h1 className='productListTitle'>Productos Almacenados</h1>
       <div className='productList'>
-        <ProductCard></ProductCard>
-        <ProductCard></ProductCard>
+        {products.map((product,index) => (
+          <ProductCard key={index} product={product} ></ProductCard>
+        ))}
       </div>
 
   </div>
