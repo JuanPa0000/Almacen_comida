@@ -36,7 +36,7 @@ export default function App() {
   return (
     <div style={{width: '80rem'}}>
 
-     <form className="form" onSubmit={addProduct} id='form'>
+      <form className="form" onSubmit={addProduct} id='form'>
         <label htmlFor="product">Nombre:</label>
         <input className="form-product" type="text" name="product" id="product" required/>
         <label htmlFor="description">Descripción:</label>

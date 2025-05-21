@@ -154,3 +154,35 @@
     background-color: rgb(255, 138, 117);
     width: 100%;
 }
+
+/*DETAILS CARD*/
+.detailsCard{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    background-color: white;
+    border-radius: 20px;
+    padding: 1rem;
+    box-shadow: rgba(14, 14, 13, 0.236) 0 0 10px;
+    width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+}
+.detailsCard-date{
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+.detailsCard-extra div{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.detailsCard p{
+    font-size: 1.2rem;
+}
