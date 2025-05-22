@@ -171,6 +171,8 @@
     align-items: center;
     text-align: center;
     margin: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 .detailsCard-date{
     display: flex;

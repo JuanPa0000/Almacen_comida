@@ -55,7 +55,7 @@ export default function ProductCard({product, deleteProduct, activeProductDetail
             <div className='productCard-buttons'>
                 <button className='productCard-buttons-details' onClick={onDetails}><i className="fa-solid fa-bars"></i></button>
                 <button className='productCard-buttons-add'><i className="fa-solid fa-plus"></i></button>
-                <button className='productCard-buttons-delete' onClick={deleteProduct}><i class="fa-solid fa-trash"></i></button>
+                <button className='productCard-buttons-delete' onClick={deleteProduct}><i className="fa-solid fa-trash"></i></button>
             </div>
         </div>
     )
