@@ -33,6 +33,11 @@ export default function App() {
     setProduct(newProductList);
   }
 
+  const [details,setDetails] = useState()
+  function activeProductDetails(name,description,stock,category,size,price){
+    setDetails(<DetailsCard name={name} description={description} stock={stock} category={category} size={size} price={price}></DetailsCard>)
+  }
+
   return (
     <div style={{width: '80rem'}}>
 
@@ -72,10 +77,10 @@ export default function App() {
       <h1 className='productListTitle'>Productos Almacenados</h1>
       <div className='productList'>
         {products.map((product,index) => (
-          <ProductCard key={index} product={product} deleteProduct={() => deleteProduct(index)}></ProductCard>
+          <ProductCard key={index} product={product} deleteProduct={() => deleteProduct(index)} activeProductDetails={activeProductDetails}></ProductCard>
         ))}
       </div>
-      <DetailsCard></DetailsCard>
+      {details}
   </div>
 
   )

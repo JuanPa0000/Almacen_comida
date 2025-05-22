@@ -1,6 +1,6 @@
 import '../App.css';
 
-export default function DetailsCard(){
+export default function DetailsCard(name,description,stock,category,size,price){
     const hoy = new Date();
     const dia = hoy.getDate();
     const mes = hoy.getMonth() + 1;
@@ -12,11 +12,13 @@ export default function DetailsCard(){
     const minutos = ahora.getMinutes();
     const hour = `${horas}:${minutos}`;
 
+    console.log(name,description,stock,category,size,price);
     return (
     <div className='detailsCard'>
+        <i class="fa-solid fa-xmark"></i>
         <div className='detailsCard-title'>
-            <h1 className='detailsCard-title-name'>Tomates</h1>
-            <p className='detailsCard-title-description'>Los tomates los va a llevar Yadier en la furgoneta y los bajo Aritz en el barco</p>
+            <h1 className='detailsCard-title-name'>a</h1>
+            <p className='detailsCard-title-description'>a</p>
         </div>
         <div className='detailsCard-date'>
             <div className='detailsCard-date-day'>
@@ -31,18 +33,18 @@ export default function DetailsCard(){
         <div className='detailsCard-extra'>
             <div className='detailsCard-extra-stock'>
                 <h2 className='detailsCard-extra-stock-title'>Stock:</h2>
-                <p className='detailsCard-extra-stock-content'>284</p>
+                <p className='detailsCard-extra-stock-content'>a</p>
             </div>
             <div className='detailsCard-extra-category'>
                 <h2 className='detailsCard-extra-category-title'>Categoría:</h2>
-                <p className='detailsCard-extra-category-content'>Vegetales</p>
+                <p className='detailsCard-extra-category-content'>a</p>
             </div>
             <div className='detailsCard-extra-size'>
                 <h2 className='detailsCard-extra-size-title'>Peso:</h2>
-                <p className='detailsCard-extra-size-content'>245Kg</p>
+                <p className='detailsCard-extra-size-content'>a</p>
             </div>
             <div className='detailsCard-extra-price'>
-                <h1 className='detailsCard-extra-price-content'>28$</h1>
+                <h1 className='detailsCard-extra-price-content'>a$</h1>
         </div>
         </div>
     </div>
