@@ -1,6 +1,6 @@
 import './../App.css';
 
-export default function ProductCard({product, deleteProduct, activeProductDetails}) {
+export default function ProductCard({product, deleteProduct, activeProductDetails, index, addMoreProducts, onAddButton}) {
     let category;
     switch (product.category) {
         case 1:
@@ -54,7 +54,7 @@ export default function ProductCard({product, deleteProduct, activeProductDetail
             </div>
             <div className='productCard-buttons'>
                 <button className='productCard-buttons-details' onClick={onDetails}><i className="fa-solid fa-bars"></i></button>
-                <button className='productCard-buttons-add'><i className="fa-solid fa-plus"></i></button>
+                <button className='productCard-buttons-add' onClick={() => onAddButton(index)}><i className="fa-solid fa-plus"></i></button>
                 <button className='productCard-buttons-delete' onClick={deleteProduct}><i className="fa-solid fa-trash"></i></button>
             </div>
         </div>

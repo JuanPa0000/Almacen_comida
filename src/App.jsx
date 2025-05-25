@@ -2,11 +2,16 @@ import React from 'react';
 import { useState } from 'react';
 import ProductCard  from './components/ProductCard';
 import DetailsCard  from './components/DetailsCard';
+import AddMoreCard from './components/AddMoreCard';
 import './App.css';
 
 export default function App() {
+  //Variable estado de la product card
   const [products, setProduct] = useState([]);
+  //Variable estado de los botones de la product card
+  const [productCardButtons,setProductCardButtons] = useState()
 
+  //Funcion de añadir productos
   function addProduct(event){
     event.preventDefault();
     const form=event.target;
@@ -23,6 +28,33 @@ export default function App() {
     form.reset();
   }
 
+  //Funcion de añadir mas productos -> Product Card Button
+  function addMoreProducts(extraProducts,index){
+    //Asignar la nueva lista de productos
+    let newProductList=[];
+    for(let i=0;i<products.length;i++){
+      //Si los indices no coinciden lo agrega normal a la lista
+      if (i!=index){
+        newProductList.push(products[i]);
+      //Si los indices coinciden le suma las nuevas variables
+      } else {
+        //Asignar un nuevo objeto con las priopedades anteriores y las nuevas sumadas
+        let newProduct={
+          product: products[i].product,
+          description: products[i].description,
+          category: products[i].category,
+          size: parseInt(products[i].size)+parseInt(extraProducts.size),
+          stock: parseInt(products[i].stock)+parseInt(extraProducts.stock),
+          price: parseInt(products[i].price)+parseInt(extraProducts.price)
+        }
+        //Agregar la variable newProduct a la lista
+        newProductList.push(newProduct);
+      }
+      //Actualizar useState 
+      setProduct(newProductList);
+    }
+  }
+  //Funcion de eliminar producto -> Product Card Button
   function deleteProduct(index){
     let newProductList=[];
     for (let i=0; i<products.length; i++){
@@ -31,14 +63,26 @@ export default function App() {
       }
     }
     setProduct(newProductList);
+    setProductCardButtons();
+  }
+  //Funcion de activar detalles del product -> Product Card Button
+  function activeProductDetails(product,description,stock,category,size,price){
+    setProductCardButtons(<DetailsCard productName={product} description={description} stock={stock} category={category} size={size} price={price} closeProductDetails={closeProductDetails}></DetailsCard>);
+  } //Cerrar product details card
+  function closeProductDetails(){
+    setProductCardButtons();
   }
 
-  const [details,setDetails] = useState()
-  function activeProductDetails(product,description,stock,category,size,price){
-    setDetails(<DetailsCard productName={product} description={description} stock={stock} category={category} size={size} price={price} closeProductDetails={closeProductDetails}></DetailsCard>);
-  }
-  function closeProductDetails(){
-    setDetails();
+  //Función de cerrar card añadir productos extra -> Product Card Button
+  function closeAddMoreCard(){
+      setProductCardButtons();
+  } // Botom de añadir producto extra
+  function onAddButton(index){
+    setProductCardButtons(<AddMoreCard 
+        closeAddMoreCard={closeAddMoreCard}
+        addMoreProducts={addMoreProducts}
+        index={index}
+        ></AddMoreCard>);
   }
 
   return (
@@ -82,13 +126,16 @@ export default function App() {
         {products.map((product,index) => (
           <ProductCard 
           key={index}
+          index={index}
           product={product} 
           deleteProduct={() => deleteProduct(index)} 
-          activeProductDetails={activeProductDetails} 
+          activeProductDetails={activeProductDetails}
+          addMoreProducts={addMoreProducts} 
+          onAddButton={onAddButton}
           ></ProductCard>
         ))}
       </div>
-      {details}
+      {productCardButtons}
   </div>
 
   )

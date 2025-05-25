@@ -188,3 +188,11 @@
 .detailsCard p{
     font-size: 1.2rem;
 }
+
+/*ADD MORE CARD*/
+.addMoreCard{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
