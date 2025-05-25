@@ -174,10 +174,18 @@
     overflow-wrap: break-word;
     word-break: break-word;
 }
+.detailsCard-title-name{
+    margin: 0;
+}
+.detailsCard-title-description{
+    margin: 0;
+    color: gray;
+}
 .detailsCard-date{
     display: flex;
     gap: 2rem;
     justify-content: center;
+    margin-bottom: 2rem;
 }
 .detailsCard-extra div{
     display: flex;

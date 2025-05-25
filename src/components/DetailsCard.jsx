@@ -21,12 +21,12 @@ export default function DetailsCard({productName,description,stock,category,size
         </div>
         <div className='detailsCard-date'>
             <div className='detailsCard-date-day'>
-                <h2 className='detailsCard-date-day-title '>Fecha</h2>
-                <p className='detailsCard-date-day-content'>{day}</p>
+                <h3 className='detailsCard-date-day-title' style={{marginBottom: '0'}}>Fecha</h3>
+                <p className='detailsCard-date-day-content' style={{margin: '0'}}>{day}</p>
             </div>
             <div className='detailsCard-date-hour'>
-                <h2 className='detailsCard-date-hour-title'>Hora</h2>
-                <p className='detailsCard-date-hour-content'>{hour}</p>
+                <h3 className='detailsCard-date-hour-title' style={{marginBottom: '0'}}>Hora</h3>
+                <p className='detailsCard-date-hour-content' style={{margin: '0'}}>{hour}</p>
             </div>
         </div>
         <div className='detailsCard-extra'>

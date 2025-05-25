@@ -1,22 +1,67 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard  from './components/ProductCard';
 import DetailsCard  from './components/DetailsCard';
 import AddMoreCard from './components/AddMoreCard';
 import './App.css';
+import { collection, getDocs, doc, deleteDoc, setDoc } from "firebase/firestore";
+import { db } from './firebase';
 
 export default function App() {
-  //Variable estado de la product card
   const [products, setProduct] = useState([]);
-  //Variable estado de los botones de la product card
-  const [productCardButtons,setProductCardButtons] = useState()
+  const [productCardButtons,setProductCardButtons] = useState();
 
-  //Funcion de añadir productos
+  // Cargar productos guardados en Firestore al iniciar la app
+  useEffect(() => {
+    async function fetchProducts() {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      // Cargamos los productos incluyendo el id para luego sincronizar bien
+      const loadedProducts = querySnapshot.docs.map(docSnap => ({
+        id: docSnap.id,
+        ...docSnap.data()
+      }));
+      setProduct(loadedProducts);
+    }
+    fetchProducts();
+  }, []);
+
+  // Cada vez que 'products' cambie, sincronizamos Firestore: borramos todo y añadimos productos nuevos
+  useEffect(() => {
+    async function resetProductsInDb() {
+      try {
+        // 1. Leer todos los documentos actuales de la colección
+        const querySnapshot = await getDocs(collection(db, "products"));
+        // 2. Borrar cada documento existente
+        const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, "products", docSnap.id)));
+        await Promise.all(deletePromises);
+
+        // 3. Subir todos los productos nuevos con id único (usar el índice o el id actual)
+        const addPromises = products.map((product, index) => {
+          // Para evitar guardar el campo 'id' dentro del documento en Firestore
+          const { id, ...productData } = product;
+          // Id nuevo o reutilizar el id para mantener consistencia
+          const docId = id || `product_${index}`;
+          return setDoc(doc(db, "products", docId), productData);
+        });
+        await Promise.all(addPromises);
+
+        console.log("Base de datos reseteada con los nuevos productos");
+
+      } catch (error) {
+        console.error("Error reseteando la base de datos:", error);
+      }
+    }
+
+    if (products.length > 0) {
+      resetProductsInDb();
+    }
+  }, [products]);
+
+  // Función para añadir producto nuevo desde el formulario
   function addProduct(event){
     event.preventDefault();
-    const form=event.target;
+    const form = event.target;
     
-    const newProduct={
+    const newProduct = {
       product: form.product.value,
       description: form.description.value,
       category: form.category.selectedIndex,
@@ -24,65 +69,71 @@ export default function App() {
       stock: form.stock.value,
       price: form.price.value
     };
-    setProduct([...products,newProduct]);
+
+    setProduct([...products, newProduct]);
     form.reset();
   }
 
-  //Funcion de añadir mas productos -> Product Card Button
-  function addMoreProducts(extraProducts,index){
-    //Asignar la nueva lista de productos
-    let newProductList=[];
-    for(let i=0;i<products.length;i++){
-      //Si los indices no coinciden lo agrega normal a la lista
-      if (i!=index){
+  // Función para añadir más productos a uno existente (actualiza size, stock, price)
+  function addMoreProducts(extraProducts, index) {
+    let newProductList = [];
+    for(let i = 0; i < products.length; i++) {
+      if (i !== index) {
         newProductList.push(products[i]);
-      //Si los indices coinciden le suma las nuevas variables
       } else {
-        //Asignar un nuevo objeto con las priopedades anteriores y las nuevas sumadas
-        let newProduct={
-          product: products[i].product,
-          description: products[i].description,
-          category: products[i].category,
-          size: parseInt(products[i].size)+parseInt(extraProducts.size),
-          stock: parseInt(products[i].stock)+parseInt(extraProducts.stock),
-          price: parseInt(products[i].price)+parseInt(extraProducts.price)
-        }
-        //Agregar la variable newProduct a la lista
+        let newProduct = {
+          ...products[i],
+          size: parseFloat(products[i].size) + parseFloat(extraProducts.size),
+          stock: parseInt(products[i].stock) + parseInt(extraProducts.stock),
+          price: parseFloat(products[i].price) + parseFloat(extraProducts.price)
+        };
         newProductList.push(newProduct);
-      }
-      //Actualizar useState 
-      setProduct(newProductList);
-    }
-  }
-  //Funcion de eliminar producto -> Product Card Button
-  function deleteProduct(index){
-    let newProductList=[];
-    for (let i=0; i<products.length; i++){
-      if (i!=index){
-        newProductList.push(products[i]);
       }
     }
     setProduct(newProductList);
+  }
+
+  // Función para eliminar producto
+  function deleteProduct(index) {
+    let newProductList = products.filter((_, i) => i !== index);
+    setProduct(newProductList);
     setProductCardButtons();
   }
-  //Funcion de activar detalles del product -> Product Card Button
-  function activeProductDetails(product,description,stock,category,size,price){
-    setProductCardButtons(<DetailsCard productName={product} description={description} stock={stock} category={category} size={size} price={price} closeProductDetails={closeProductDetails}></DetailsCard>);
-  } //Cerrar product details card
+
+  // Función para activar detalles de producto
+  function activeProductDetails(product, description, stock, category, size, price) {
+    setProductCardButtons(
+      <DetailsCard 
+        productName={product} 
+        description={description} 
+        stock={stock} 
+        category={category} 
+        size={size} 
+        price={price} 
+        closeProductDetails={closeProductDetails} 
+      />
+    );
+  }
+
+  // Cerrar detalles producto
   function closeProductDetails(){
     setProductCardButtons();
   }
 
-  //Función de cerrar card añadir productos extra -> Product Card Button
+  // Cerrar card añadir productos extra
   function closeAddMoreCard(){
-      setProductCardButtons();
-  } // Botom de añadir producto extra
+    setProductCardButtons();
+  }
+
+  // Botón para abrir card de añadir producto extra
   function onAddButton(index){
-    setProductCardButtons(<AddMoreCard 
+    setProductCardButtons(
+      <AddMoreCard 
         closeAddMoreCard={closeAddMoreCard}
         addMoreProducts={addMoreProducts}
         index={index}
-        ></AddMoreCard>);
+      />
+    );
   }
 
   return (
@@ -125,18 +176,18 @@ export default function App() {
       <div className='productList'>
         {products.map((product,index) => (
           <ProductCard 
-          key={index}
-          index={index}
-          product={product} 
-          deleteProduct={() => deleteProduct(index)} 
-          activeProductDetails={activeProductDetails}
-          addMoreProducts={addMoreProducts} 
-          onAddButton={onAddButton}
-          ></ProductCard>
+            key={product.id || index} 
+            index={index}
+            product={product} 
+            deleteProduct={() => deleteProduct(index)} 
+            activeProductDetails={activeProductDetails}
+            addMoreProducts={addMoreProducts} 
+            onAddButton={onAddButton}
+          />
         ))}
       </div>
-      {productCardButtons}
-  </div>
 
-  )
+      {productCardButtons}
+    </div>
+  );
 }
