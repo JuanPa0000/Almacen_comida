@@ -14,7 +14,6 @@ export default function App() {
   useEffect(() => {
     async function fetchProducts() {
       const querySnapshot = await getDocs(collection(db, "products"));
-      // Cargamos los productos incluyendo el id para luego sincronizar bien
       const loadedProducts = querySnapshot.docs.map(docSnap => ({
         id: docSnap.id,
         ...docSnap.data()
@@ -24,21 +23,16 @@ export default function App() {
     fetchProducts();
   }, []);
 
-  // Cada vez que 'products' cambie, sincronizamos Firestore: borramos todo y añadimos productos nuevos
+  // Cada vez que products cambie, se borra todo y añadimos productos nuevos
   useEffect(() => {
     async function resetProductsInDb() {
       try {
-        // 1. Leer todos los documentos actuales de la colección
         const querySnapshot = await getDocs(collection(db, "products"));
-        // 2. Borrar cada documento existente
         const deletePromises = querySnapshot.docs.map(docSnap => deleteDoc(doc(db, "products", docSnap.id)));
         await Promise.all(deletePromises);
 
-        // 3. Subir todos los productos nuevos con id único (usar el índice o el id actual)
         const addPromises = products.map((product, index) => {
-          // Para evitar guardar el campo 'id' dentro del documento en Firestore
           const { id, ...productData } = product;
-          // Id nuevo o reutilizar el id para mantener consistencia
           const docId = id || `product_${index}`;
           return setDoc(doc(db, "products", docId), productData);
         });
