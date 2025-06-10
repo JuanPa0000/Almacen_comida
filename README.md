@@ -1,12 +1,36 @@
-# React + Vite
+# Almacén de Comida 
+Una aplicación web para gestionar un almacén de productos alimenticios. Permite añadir, editar, eliminar y visualizar productos, todo sincronizado en tiempo real con Firebase.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+✅ Características
 
-Currently, two official plugins are available:
+    - Añadir nuevos productos al almacén
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    - Editar productos existentes
 
-## Expanding the ESLint configuration
+    - Eliminar productos
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+    - Ver detalle de cada producto
+
+    - Base de datos en tiempo real con Firebase
+
+    - Interfaz intuitiva hecha con React
+### 📥 Registrar comidas
+![imagen](https://github.com/user-attachments/assets/53614426-87e3-49b4-b6ff-63d7963dc99e)
+
+Para registrar productos en el almacén tenemos que rellenar todos los campos, algunos campos no son obligatorios, como el peso. En el apartado de categoría podemos elegir entre varias opciones, si lo que queremos agregar no coincide con ninguna de ellas, lo dejamos en blanco una vez que tengamos los campos llenos con la descripción de nuestro producto damos en agregar.
+
+### 📁 Productos almacenados
+![imagen](https://github.com/user-attachments/assets/914025ff-cdb5-41f8-a4f9-8423b0ca47f0)
+Aqui podemos ver todos los productos de nuestro almacen, también los detalles y opcines como eliminarlo, ver los detalles o editarlo.
+
+⚙️ Características
+- Stock
+- Categoría
+- Peso
+- Precio
+
+
+![imagen](https://github.com/user-attachments/assets/01537577-3d11-4be9-8a65-c8aa1295d5d0)
+
+🚥 
+
