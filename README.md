@@ -50,8 +50,8 @@ Aqui podemos ver todos los productos de nuestro almacen, también los detalles y
   
 #### Clona el respositorio en local
 ```bash
-git clone https://github.com/JuanPa0000/Tasca10_AO.git
-cd Tasca10_AO/
+git clone https://github.com/JuanPa0000/Almacen_comida.git
+cd Almacen_comida/
 ```
 
 #### Inicia la aplicacion
